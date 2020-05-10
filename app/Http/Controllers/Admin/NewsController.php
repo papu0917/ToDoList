@@ -91,13 +91,36 @@ class NewsController extends Controller
         $to_do = ToDo::find($request->id);
         $to_do->is_complete = 1;  
         $to_do->save();
-             
-        return redirect('admin/news/');
+        
+        return redirect('admin/news/completed');
     }
     
     public function completed(Request $request)
     {
+        $cond_title = $request->cond_title;
+        if ($cond_title != '') {
+            // 検索されたら検索結果を取得する
+            $posts = ToDo::where('title', $cond_title)->get();
+        }  else {
+            // それ以外はすべてのニュースを取得する
+            $posts = ToDo::where('is_complete', 1)->get();
+        }
     
+            return view('admin.news.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
+    }
+    
+    public function uncomplete(Request $request)
+    {
+        $cond_title = $request->cond_title;
+            if ($cond_title != '') {
+            // 検索されたら検索結果を取得する
+            $posts = ToDo::where('title', $cond_title)->get();
+        } else {
+            // それ以外はすべてのニュースを取得する
+            $posts = ToDo::where('is_complete', 1)->get();
+        }
+        
+        return view('admin.news.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
 }
 
