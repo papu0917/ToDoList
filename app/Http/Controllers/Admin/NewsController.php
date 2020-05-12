@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ToDo;
+use Carbon\Carbon;
 use Auth;
 
 
@@ -43,6 +44,13 @@ class NewsController extends Controller
         } else {
             // それ以外はすべてのニュースを取得する
             $posts = ToDo::where('is_complete', 0)->get();
+        }
+        
+        $posts = ToDo::all()->sortByDesc('updated_at');
+        if (count($posts) > 0) {
+            $headline = $posts->shift();
+        } else {
+            $headline = null;
         }
     
         return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
@@ -111,16 +119,11 @@ class NewsController extends Controller
     
     public function uncomplete(Request $request)
     {
-        $cond_title = $request->cond_title;
-            if ($cond_title != '') {
-            // 検索されたら検索結果を取得する
-            $posts = ToDo::where('title', $cond_title)->get();
-        } else {
-            // それ以外はすべてのニュースを取得する
-            $posts = ToDo::where('is_complete', 1)->get();
-        }
+        $to_do = ToDo::find($request->id);
+        $to_do->is_complete = 0;  
+        $to_do->save();
         
-        return view('admin.news.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
+        return redirect('admin/news/');
     }
 }
 

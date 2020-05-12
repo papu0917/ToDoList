@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h2>ToDo List</h2>
+            <h2>タスク一覧</h2>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -54,6 +54,19 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @foreach($posts as $post)
+                                <tr>
+                                    <div class="post">
+                                        <div class="low">
+                                            <div class="text col-md-6">
+                                                <div class="date">
+                                                    {{ $post->updated_at->format('Y年m月d日') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            @endforeach    
                         </tbody>
                     </table>
                 </div>

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'ToDoの新規作成')
+@section('title', 'Add Task')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>Add ToDo</h2>
+                <h2>タスク登録</h2>
                 <form action="{{ action('Admin\NewsController@create') }}" method="post" enctype="multipart/form-data">
 
                     @if (count($errors) > 0)
@@ -16,7 +16,7 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2">タイトル</label>
+                        <label class="col-md-2">タスク内容</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" name="title" value="{{ old('title') }}">
                         </div>
@@ -34,7 +34,7 @@
                     <!--    </div>-->
                     <!--</div>-->
                     {{ csrf_field() }}
-                    <input type="submit" class="btn btn-primary" value="作成">
+                    <input type="submit" class="btn btn-primary" value="新規追加">
                 </form>
             </div>
         </div>
