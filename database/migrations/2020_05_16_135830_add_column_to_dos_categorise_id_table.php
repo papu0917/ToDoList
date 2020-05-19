@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToDosDatesTable extends Migration
+class AddColumnToDosCategoriseIdTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnToDosDatesTable extends Migration
     public function up()
     {
         Schema::table('to_dos', function (Blueprint $table) {
-            $table->date('deadline_date')->nullable();
+            $table->integer('category_id');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnToDosDatesTable extends Migration
     public function down()
     {
         Schema::table('to_dos', function (Blueprint $table) {
-            $table->dropColumn('deadline_date');
+            $table->dropColumn('category_id');
         });
     }
 }

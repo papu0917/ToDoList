@@ -17,18 +17,27 @@ Route::get('/', function () {
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-    Route::get('news/create', 'Admin\NewsController@add');
-    Route::post('news/create', 'Admin\NewsController@create');
-    Route::get('news', 'Admin\NewsController@index');
-    Route::get('news/edit', 'Admin\NewsController@edit');
-    Route::post('news/edit', 'Admin\NewsController@update');
-    Route::get('news/delete', 'Admin\NewsController@delete');
-    Route::get('news/complete', 'Admin\NewsController@complete');
-    Route::get('news/completed', 'Admin\NewsController@completed');
-    Route::get('news/uncomplete', 'Admin\NewsController@uncomplete');
+    Route::get('todo/create', 'Admin\TodoController@add');
+    Route::post('todo/create', 'Admin\TodoController@create');
+    Route::get('todo', 'Admin\TodoController@index');
+    Route::get('todo/edit', 'Admin\TodoController@edit');
+    Route::post('todo/edit', 'Admin\TodoController@update');
+    Route::get('todo/delete', 'Admin\TodoController@delete');
+    Route::get('todo/complete', 'Admin\TodoController@complete');
+    Route::get('todo/completed', 'Admin\TodoController@completed');
+    Route::get('todo/uncomplete', 'Admin\TodoController@uncomplete');
 });
 
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('category/create', 'Admin\CategoryController@add');
+    Route::post('category/create', 'Admin\CategoryController@create');
+    Route::get('category', 'Admin\CategoryController@index');
+    Route::get('category/edit', 'Admin\CategoryController@edit');
+    Route::post('category/edit', 'Admin\CategoryController@update');
+    Route::get('category/delete', 'Admin\CategoryController@delete');
+    
+});
 
 Auth::routes();
 
-Route::get('/home', 'Admin\NewsController@index')->name('home');
+Route::get('/home', 'Admin\TodoController@index')->name('home');

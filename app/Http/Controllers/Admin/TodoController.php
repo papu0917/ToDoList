@@ -1,26 +1,25 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ToDo;
+use App\Category;
 use Carbon\Carbon;
 use Auth;
 
 
-class NewsController extends Controller
+class TodoController extends Controller
 {
     public function add()
     {
-        return view('admin.news.create');
+        return view('admin.todo.create');
     }
   
     public function create(Request $request)
     {
         $this->validate($request, ToDo::$rules);
-      
-      
+    
         $to_do = new ToDo;
         $form = $request->all();
       
@@ -30,30 +29,32 @@ class NewsController extends Controller
         $to_do->user_id = Auth::id(); // ログインユーザーのIDを設定
         $to_do->is_complete = 0; // 未完了状態を設定
         $to_do->save();
-
-      
-        return redirect('admin/news/');
+        
+        
+        return redirect('admin/todo/');
     }  
   
     public function index(Request $request)
     {
+       
+        
         $cond_title = $request->cond_title;
         if ($cond_title != '') {
             // 検索されたら検索結果を取得する
-            $posts = ToDo::where('title', $cond_title)->get();
+            $toDoQuery = ToDo::where('title', $cond_title);
         } else {
             // それ以外はすべてのニュースを取得する
-            $posts = ToDo::where('is_complete', 0)->get();
+            $toDoQuery = ToDo::where('is_complete', 0);
         }
         
-        $posts = ToDo::all()->sortByDesc('updated_at');
-        if (count($posts) > 0) {
-            $headline = $posts->shift();
-        } else {
-            $headline = null;
+        $order = $request->order;
+        if ($order != '') {
+            $toDoQuery->orderBy('priority', $order);
         }
+        
+        $toDos = $toDoQuery->paginate(5);
     
-        return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+        return view('admin.todo.index', ['posts' => $toDos, 'cond_title' => $cond_title]);
     }
   
     public function edit(Request $request)
@@ -63,9 +64,9 @@ class NewsController extends Controller
         if (empty($to_do)) {
             abort(404);    
         }
-        return view('admin.news.edit', ['to_do_form' => $to_do]);
+        return view('admin.todo.edit', ['to_do_form' => $to_do]);
         
-        return redirect('admin/news');
+        return redirect('admin/todo');
     }
   
     public function update(Request $request)
@@ -81,7 +82,7 @@ class NewsController extends Controller
         // 該当するデータを上書きして保存する
         $to_do->fill($to_do_form)->save();
 
-        return redirect('admin/news');
+        return redirect('admin/todo');
     }
   
     public function delete(Request $request)
@@ -91,7 +92,7 @@ class NewsController extends Controller
         // 削除する
         $to_do->delete();
         
-        return redirect('admin/news/');
+        return redirect('admin/todo/');
     }  
   
     public function complete(Request $request)
@@ -100,7 +101,7 @@ class NewsController extends Controller
         $to_do->is_complete = 1;  
         $to_do->save();
         
-        return redirect('admin/news/completed');
+        return redirect('admin/todo/completed');
     }
     
     public function completed(Request $request)
@@ -113,8 +114,10 @@ class NewsController extends Controller
             // それ以外はすべてのニュースを取得する
             $posts = ToDo::where('is_complete', 1)->get();
         }
-    
-            return view('admin.news.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
+        
+        // $posts = ToDo::latest()->paginate(5);
+        
+            return view('admin.todo.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
     }
     
     public function uncomplete(Request $request)
@@ -123,7 +126,7 @@ class NewsController extends Controller
         $to_do->is_complete = 0;  
         $to_do->save();
         
-        return redirect('admin/news/');
+        return redirect('admin/todo/');
     }
 }
 
