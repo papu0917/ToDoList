@@ -24,6 +24,8 @@ class CategoryController extends Controller
         $category->fill($form);
         $category->save();
       
+      
+      
       return redirect('admin/category');
         
     }
@@ -39,7 +41,7 @@ class CategoryController extends Controller
             $category = Category::all();
         }
         
-        // dd($category);
+        $category = Category::paginate(5);
         
         return view('admin.category.index', ['posts' => $category, 'cond_title' => $cond_title]);
         
@@ -54,7 +56,7 @@ class CategoryController extends Controller
         }
         return view('admin.category.edit', ['category_form' => $category]);
         
-        return view('admin.category');
+        
         
     }
     

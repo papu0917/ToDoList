@@ -44,6 +44,7 @@
                                 <th width="20%">タイトル</th>
                                 <th width="20%">期限日</th>
                                 <th width="20%">優先度</th>
+                                <th width="20%">カテゴリー</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,6 +58,7 @@
                                     <td>{{ \Str::limit($to_do->title, 200) }}</td>
                                     <td>{{ $to_do->deadline_date->format('Y/m/d') }}</td>
                                     <td>{{ $to_do->priority }}</td>
+                                    <td>{{ $to_do->category->name }}</td>
                                     <td>
                                         <div>
                                             <a href="{{ action('Admin\TodoController@edit', ['id' => $to_do->id]) }}">編集</a>

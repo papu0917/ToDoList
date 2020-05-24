@@ -24,19 +24,31 @@
                     <div class="form-grop row">
                         <label class="col-md-2">期限</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="deadline_date" value="{{ old('deadline_date') }}">
+                            <input type="date" class="form-control" name="deadline_date" value="{{ old('deadline_date') }}">
                         </div>
                     </div>
                     <div class="form-grop row">
                         <label class="col-md-2">優先度</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="priority" value="{{ old('priority') }}">
+                            <select name="priority">
+                                <option>選択してください</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option value="{{ old('priority') }}"</option>   
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2">カテゴリー</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="category_id" value="{{ old('category_id') }}">
+                            <select name="category_id">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     {{ csrf_field() }}
@@ -47,3 +59,4 @@
         </div>
     </div>
 @endsection
+  

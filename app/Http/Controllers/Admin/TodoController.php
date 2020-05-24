@@ -13,7 +13,9 @@ class TodoController extends Controller
 {
     public function add()
     {
-        return view('admin.todo.create');
+        $categories = Category::all();
+        
+        return view('admin.todo.create', ['categories' => $categories]);
     }
   
     public function create(Request $request)
@@ -30,8 +32,8 @@ class TodoController extends Controller
         $to_do->is_complete = 0; // 未完了状態を設定
         $to_do->save();
         
-        
-        return redirect('admin/todo/');
+     
+        return redirect('admin/todo');
     }  
   
     public function index(Request $request)
@@ -52,9 +54,16 @@ class TodoController extends Controller
             $toDoQuery->orderBy('priority', $order);
         }
         
+        $name = $request->name;
+        if ($name != '') {
+            $toDoQuery = Category::where('name', $name);
+        }
+        
+        
+        
         $toDos = $toDoQuery->paginate(5);
     
-        return view('admin.todo.index', ['posts' => $toDos, 'cond_title' => $cond_title]);
+        return view('admin.todo.index', ['posts' => $toDos, 'cond_title' => $cond_title, 'name' => $name]);
     }
   
     public function edit(Request $request)
@@ -64,9 +73,11 @@ class TodoController extends Controller
         if (empty($to_do)) {
             abort(404);    
         }
-        return view('admin.todo.edit', ['to_do_form' => $to_do]);
         
-        return redirect('admin/todo');
+        $categories = Category::all();
+        
+        return view('admin.todo.edit', ['to_do_form' => $to_do, 'categories' => $categories]);
+        
     }
   
     public function update(Request $request)
@@ -115,7 +126,7 @@ class TodoController extends Controller
             $posts = ToDo::where('is_complete', 1)->get();
         }
         
-        // $posts = ToDo::latest()->paginate(5);
+            $posts = ToDo::paginate(5);
         
             return view('admin.todo.completed', ['posts' => $posts, 'cond_title' => $cond_title]);
     }

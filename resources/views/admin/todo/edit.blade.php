@@ -23,19 +23,31 @@
                     <div class="form-group row">
                         <label class="col-md-2" for="deadline_date">期限</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="deadline_date" value="{{ $to_do_form->deadline_date }}">
+                            <input type="date" class="form-control" name="deadline_date" value="{{ $to_do_form->deadline_date }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2" for="priority">優先度</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="priority" value="{{ $to_do_form->priority }}">
+                            <select name="priority">
+                                <option>選択してください</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option value="{{ old('priority') }}"</option>   
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2" for="priority">カテゴリー</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="category_id" value="{{ $to_do_form->category_id }}">
+                            <select name="category_id">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

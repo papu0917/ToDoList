@@ -12,10 +12,10 @@ class Category extends Model
         'name' => 'required',
     );
     
-    public function todo()
+    public function todos()
     {
-        // 子→親
-        return $this->belongsTo('App\ToDo');
+        // 親→子
+        return $this->hasMany('App\ToDo');
         
     }
 }

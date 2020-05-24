@@ -18,11 +18,16 @@ class ToDo extends Model
         // 'is_complete' => 'required',
     );
     
-    public function categorise()
+    public function category()
     {
-        //親→子
-        return $this->hasMany('App\Category'); 
+        //子→親
+        return $this->belongsTo('App\Category');
         
         
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
