@@ -7,8 +7,8 @@
             <h2>タスク一覧</h2>
         </div>
         <form action="{{ action('Admin\TodoController@index') }}" method="get">
+            <label class="col-md-2">並び替え :</label>
             <select name="order">
-                <option>並び替える</option>
                 <option value="desc">優先度高い順</option>
                 <option value="asc">優先度低い順</option>
             </select>
@@ -25,6 +25,14 @@
                         <label class="col-md-2">タイトル</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
+                        </div>
+                        <div class="col-md-2">
+                            {{ csrf_field() }}
+                            <input type="submit" class="btn btn-primary" value="検索">
+                        </div>
+                        <label class="col-md-2">カテゴリー</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="cond_name" value="{{ $cond_name }}">
                         </div>
                         <div class="col-md-2">
                             {{ csrf_field() }}

@@ -15,7 +15,7 @@ class Category extends Model
     public function todos()
     {
         // 親→子
-        return $this->hasMany('App\ToDo');
+        return $this->hasMany('App\ToDo')->withDefault();
         
     }
 }

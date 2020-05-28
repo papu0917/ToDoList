@@ -21,13 +21,13 @@ class ToDo extends Model
     public function category()
     {
         //子→親
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Category')->withDefault();
         
         
     }
     
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withDefault();
     }
 }

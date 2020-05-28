@@ -31,7 +31,6 @@
                         <label class="col-md-2">優先度</label>
                         <div class="col-md-10">
                             <select name="priority">
-                                <option>選択してください</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>

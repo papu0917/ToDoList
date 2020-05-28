@@ -38,8 +38,6 @@ class TodoController extends Controller
   
     public function index(Request $request)
     {
-       
-        
         $cond_title = $request->cond_title;
         if ($cond_title != '') {
             // 検索されたら検索結果を取得する
@@ -53,17 +51,24 @@ class TodoController extends Controller
         if ($order != '') {
             $toDoQuery->orderBy('priority', $order);
         }
+        // dd($order);
         
-        $name = $request->name;
-        if ($name != '') {
-            $toDoQuery = Category::where('name', $name);
+        $cond_name = $request->cond_name;
+        // dd($cond_name);
+        
+        if ($cond_name != '') {
+            // dd($cond_name);
+            $toDoQuery->whereHas('category', function($query) use ($cond_name) {
+                // slugをkeywordで検索
+                $query->where('name', $cond_name);
+            });
         }
         
         
         
         $toDos = $toDoQuery->paginate(5);
     
-        return view('admin.todo.index', ['posts' => $toDos, 'cond_title' => $cond_title, 'name' => $name]);
+        return view('admin.todo.index', ['posts' => $toDos, 'cond_title' => $cond_title, 'cond_name' => $cond_name]);
     }
   
     public function edit(Request $request)

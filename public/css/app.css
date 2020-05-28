@@ -254,7 +254,7 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
+  /*font-family: inherit;*/
   font-size: inherit;
   line-height: inherit;
 }
@@ -741,8 +741,8 @@ pre code {
 .col-2,
 .col-1 {
   position: relative;
-  width: 100%;
-  padding-right: 15px;
+  /*width: 100%;*/
+  /*padding-right: 15px;*/
   padding-left: 15px;
 }
 
@@ -2062,7 +2062,7 @@ pre code {
 
 .table-dark {
   color: #000;
-  background-color: #000;
+  background-color: #f8f9fa;
 }
 
 .table-dark th,
